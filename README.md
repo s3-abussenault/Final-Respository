@@ -4,7 +4,7 @@
   ### Contents  
   1. [Introduction](#1-introduction)
   2. [BLAST](#2-BLAST)
-  3. [Alignment](#3-Alignment) 
+  3. [Functional Domain Analysis](#3-Functional Domain Analysis) 
   4. [IQ-Tree](#4-IQ-Tree) 
   5. [Reconciling](#5-Reconciling)
   6. [Protein-Domain](#6-Protein-Domain)
@@ -111,10 +111,46 @@ grep -o -E "^[A-Z]\.[a-z]+" EEF2K.blastp.detail.filtered.out | sort | uniq -c
 
 ### See Results for further information on expected output of these commands
 
+# 3. Mulitple Sequence Alignment 
+This repository focuses on performing multiple sequence alignment (MSA) for the EEF2K gene family, a continuation from Lab 3's homolog identification. The aim is to align sequences with tools such as MUSCLE, AlignBuddy, and T-Coffee, assess sequence conservation, and calculate alignment statistics. Key analyses include identifying conserved regions, calculating average percent identity, and visualizing alignments to ensure their biological validity. This lab also involves identifying citations to understand EEF2K’s gene family evolution and its regulatory role in protein synthesis.
 
+## Set Up Environment
 
+Make sure you create a folder for the EEF2K family for this lab
 
+```
+mkdir ~/lab04-$MYGIT/EEF2K
+```
 
+Now, go into the directory
+
+```
+cd ~/lab04-$MYGIT/EEF2K
+```
+
+Use the ```pwd``` command if you are unsure whether you are in the right working directory
+
+## Extract Homolog Sequences
+Extract sequences for homologs identified in lab 03 and save them as ```EEF2L.homologs.fas``` using this command 
+
+```
+seqkit grep --pattern-file ~/lab03-$MYGIT/EEF2K/EEF2K.blastp.detail.filtered.out ~/lab03-$MYGIT/allprotein.fas | seqkit grep -v -p "carpio" > ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.fas
+```
+
+## Perform Multiple Sequence Alignment
+Align homolog sequence using MUSCLE to create hypothesis of homology among positions in sequence using this command
+
+```
+muscle -align ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.fas -output ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas
+```
+
+## Generate Alignment PDF
+Use R script to create high-resolution PDF of alignment 
+
+```
+Rscript --vanilla ~/lab04-$MYGIT/plotMSA.R ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas
+```
+PDF should have the name ```EEF2K.homologs.al.fas.pdf```
 
 
 
@@ -138,11 +174,17 @@ The BLAST analysis for EEF2K - after applying E-value threshold of 1e-30 - found
 | S.townsendi  |       1    |
 | X.laevis     |      2     |
 
-### Highest scoring hit identified as query sequence itself (_Homo sapeins_ EEF2K)
+### Highest scoring hit
+identified as query sequence itself (_Homo sapiens_ EEF2K). 
 
-### No species found to have zero homologs
+Note: _Xenopus laevis_ and _Gallus gallus_ had very high scores highlighting strong conservation of EEF2K gene across mammals, amphibians, and birds
 
-**IMPORTANT NOTE:** For your project, it is desirable to work with between 20 and 85 homologs. In addition, you should have between 2 and 15 copies from each species. Rest has pre-selected gene families that should be in these ranges. If you are not in that range, you will need to change the e-value threshold to increase or decrease the number of hits  - but you **must** talk to your TA when making this decision.  
+### Zero Homolog Test
+No species found to have zero homologs
+
+### Important Note
+As discussed with TA, this table was approved due to high degree of conservation of the EEF2K gene family. Decreases in stringency found hits with significantly lower percent identity (~30%)
+
 
 
 
