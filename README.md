@@ -131,7 +131,7 @@ cd ~/lab04-$MYGIT/EEF2K
 Use the ```pwd``` command if you are unsure whether you are in the right working directory
 
 ## Extract Homolog Sequences
-Extract sequences for homologs identified in lab 03 and save them as ```EEF2L.homologs.fas``` using this command 
+Extract sequences for homologs identified in lab 03 and save them as ```EEF2K.homologs.fas``` using this command 
 
 ```
 seqkit grep --pattern-file ~/lab03-$MYGIT/EEF2K/EEF2K.blastp.detail.filtered.out ~/lab03-$MYGIT/allprotein.fas | seqkit grep -v -p "carpio" > ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.fas
@@ -180,7 +180,106 @@ Once again, _alignbuddy_ can also be used to calculate average percent identity.
 alignbuddy -pi ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas | awk '(NR>2) { for (i=2;i<=NF;i++){ sum+=$i;num++} } END{ print(100*sum/num) }'
 ```
 
-### See Results for further information on expected output of these commands
+### See [Results](#7-Results) for further information on expected output of these commands
+
+# 4. IQ-TREE
+This repository focuses on constructing a maximum-likelihood phylogenetic tree for the EEF2K gene family using sequence alignments derived from Lab 4. Key steps include refining the sequence alignment by removing duplicates, selecting an appropriate substitution model, and estimating the optimal phylogenetic tree with bootstrap support using IQ-TREE. Additionally, the phylogeny was visualized both as an unrooted and midpoint-rooted tree, with graphical outputs saved as PDFs for detailed examination. The analysis provides insights into the evolutionary relationships among EEF2K homologs across species, emphasizing branch lengths, clade support, and overall topology.
+
+## Set Up Environment
+
+Make sure you create a folder for the EEF2K family for this lab
+
+```
+mkdir ~/lab05-$MYGIT/EEF2K
+```
+
+Now, go into the directory
+
+```
+cd ~/lab05-$MYGIT/EEF2K
+```
+
+Use the ```pwd``` command if you are unsure whether you are in the right working directory
+
+## Refine Sequence Alignment
+First, remove duplicate sequence labels and save refined file in directory using this command
+
+```
+sed 's/ /_/g' ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas | seqkit grep -v -r -p "dupelabel" > ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.fas
+```
+## Generate Maximum-Likelihood Tree
+Run IQ-Tree to estimate the maximum-likelihood tree for EEF2K homologs using refined alignment 
+
+```
+iqtree -s ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.fas -bb 1000 -nt 2
+```
+
+Use R script to generate a graphical PDF of unrooted tree with adjusted label sizes and lengths
+
+```
+Rscript --vanilla ~/lab05-$MYGIT/plotUnrooted.R ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.fas.treefile ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.fas.treefile.pdf 0.4 15
+```
+
+PDF name should be ```EEF2K.homologsf.al.fas.treefile.pdf```
+
+## Generate Midpoint-Rooted Tree
+Perform the midpoint rooting by rooting at the midpoint of the longest branch using this command
+
+```
+gotree reroot midpoint -i ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.fas.treefile -o ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile
+```
+
+Generate an SVG image of the midpoint-rooted tree
+
+```
+nw_order -c n ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile | nw_display -w 1000 -b 'opacity:0' -s > ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.svg
+```
+
+Convert SVG image into PDF for easier sharing and analysis
+
+```
+convert ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.svg ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.pdf
+```
+
+PDF name should be ```EEF2K.homologsf.al.mid.treefile.pdf```
+
+## Generate Cladogram from Rooted Tree
+Create cladogram from rooted tree and save it as SVG
+
+```
+nw_order -c n ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile | nw_topology - | nw_display -s -w 1000 > ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.midCl.treefile.svg
+```
+
+Convert SVG image into PDF 
+
+```
+convert ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.midCl.treefile.svg ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.midCl.treefile.pdf
+```
+
+PDF name should be ```EEF2K.homologsf.al.midCl.treefile.pdf```
+
+## Generate Outgroup Rooted Tree
+Root the tree by specifying outgorup sequence with this command
+
+```
+nw_reroot ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.fas.treefile H.sapiens_LOC102945818 H.sapiens_HBB H.sapiens_HBG1 H.sapiens_HBG2 > ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile
+```
+
+Create SVG image
+
+```
+nw_order -c n ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile | nw_display -w 1000 -b 'opacity:0' -s > ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile.svg
+```
+
+Convert SVG to PDF
+
+```
+convert ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile.svg ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile.pdf
+```
+
+PDF name should be ```EEF2K.homologsf.outgroupbeta.treefile.pdf```
+
+### See [Results](#7-Results) for further information on expected output of these commands
 
 # 7. Results
 
@@ -225,10 +324,12 @@ As discussed with TA, this table was approved due to high degree of conservation
 
 The alignment results demonstrate a high degree of conservation in the EEF2K gene family, emphasizing its critical role in cellular regulation. The high percent identity and the significant number of invariant columns provide strong evidence for the functional conservation of EEF2K across species. The presence of gaps and variable regions suggests that while the core functional regions of EEF2K are conserved, some evolutionary divergence has occurred in non-essential regions.
 
-### PDF of Rscript command can be found within its respective folder (lab 04) in final repository
+### PDF of Rscript command can be found within its respective folder (Lab 04) in final repository
+
+## Lab 05
 
 
-
+### PDF of Rscript command can be found within its respective folder (Lab 05) in final repository
 
 
 
