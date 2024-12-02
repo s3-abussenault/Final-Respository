@@ -153,6 +153,34 @@ Rscript --vanilla ~/lab04-$MYGIT/plotMSA.R ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.a
 PDF should have the name ```EEF2K.homologs.al.fas.pdf```
 
 
+## Obtain Alignment Statistics 
+Using _alignbuddy_, we can calculate the total width (number of columns) in the alignment, the number of columns containing gaps, and the the number of columns in the alignment that are invariant. Here are the three separate codes for each command
+
+```
+alignbuddy -al ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas
+```
+
+```
+alignbuddy -trm all ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas | alignbuddy -al
+```
+
+```
+alignbuddy -dinv 'ambig' ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas | alignbuddy -al
+```
+
+We can use _t_coffee_ to calculate average percent identity for alignment
+
+```
+t_coffee -other_pg seq_reformat -in ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas -output sim
+```
+
+Once again, _alignbuddy_ can also be used to calculate average percent identity. Here is the command 
+
+```
+alignbuddy -pi ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.al.fas | awk '(NR>2) { for (i=2;i<=NF;i++){ sum+=$i;num++} } END{ print(100*sum/num) }'
+```
+
+### See Results for further information on expected output of these commands
 
 # 7. Results
 
@@ -185,11 +213,19 @@ No species found to have zero homologs
 ### Important Note
 As discussed with TA, this table was approved due to high degree of conservation of the EEF2K gene family. Decreases in stringency found hits with significantly lower percent identity (~30%)
 
+## Lab 04
 
+| Metric      |   Value   |
+|--------------|-----------|
+| Alignment length |    853      |
+| Columns in alignment containing gaps      |     178   |
+|Columns in alignment that are invariant    |     292    |
+|Average percent identity (_t_coffee_)  |     72.46   |
+|Average percent identity ( _alignbuddy_)   |     67.8115    |
 
+The alignment results demonstrate a high degree of conservation in the EEF2K gene family, emphasizing its critical role in cellular regulation. The high percent identity and the significant number of invariant columns provide strong evidence for the functional conservation of EEF2K across species. The presence of gaps and variable regions suggests that while the core functional regions of EEF2K are conserved, some evolutionary divergence has occurred in non-essential regions.
 
-
-
+### PDF of Rscript command can be found within its respective folder (lab 04) in final repository
 
 
 
