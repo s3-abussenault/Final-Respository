@@ -6,7 +6,7 @@
   2. [BLAST](#2-BLAST)
   3. [Multiple Sequence Alignment](#2-Multiple-Sequence-Alignment)
   4. [IQ-Tree](#4-IQ-Tree) 
-  5. [Reconciling](#5-Reconciling)
+  5. [Reconciliation](#5-Reconciliation)
   6. [Protein Domain](#6-Protein-Domain)
   7. [Results](#7-Results)
   8. [Conclusion](#8-Conclusion)
@@ -258,28 +258,69 @@ convert ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.midCl.treefile.svg ~/lab05-$MYGI
 
 PDF name should be ```EEF2K.homologsf.al.midCl.treefile.pdf```
 
-## Generate Outgroup Rooted Tree
-Root the tree by specifying outgorup sequence with this command
-
-```
-nw_reroot ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.fas.treefile H.sapiens_LOC102945818 H.sapiens_HBB H.sapiens_HBG1 H.sapiens_HBG2 > ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile
-```
-
-Create SVG image
-
-```
-nw_order -c n ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile | nw_display -w 1000 -b 'opacity:0' -s > ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile.svg
-```
-
-Convert SVG to PDF
-
-```
-convert ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile.svg ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroup.treefile.pdf
-```
-
-PDF name should be ```EEF2K.homologsf.outgroupbeta.treefile.pdf```
 
 ### See [Results](#7-Results) for further information on expected output of these commands
+
+# 5. Reconciliation
+The goal of this lab was to reconcile the evolutionary history of the EEF2K gene family by comparing its gene tree to the species tree of the studied organisms. This process involved identifying gene duplication, loss, and speciation events, which provide insight into the evolutionary dynamics of the EEF2K gene family. 
+## Set Up Environment
+
+Make sure you create a folder for the EEF2K family for this lab
+
+```
+mkdir ~/lab05-$MYGIT/EEF2K
+```
+
+Now, go into the directory
+
+```
+cd ~/lab05-$MYGIT/EEF2K
+```
+
+Use the ```pwd``` command if you are unsure whether you are in the right working directory
+
+## Copy Midpoint Tree from Lab 05 to Lab 06
+
+```
+cp ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile
+```
+
+## Run Reconciliation using NOTUNG
+Use NOTUNG to identify duplication, losses, and speciation events through this command
+
+```
+java -jar ~/tools/Notung-3.0_24-beta/Notung-3.0_24-beta.jar -s ~/lab06-$MYGIT/EEF2K/species.tre -g ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile --reconcile --speciestag prefix --savepng --events --outputdir ~/lab06-$MYGIT/EEF2K/
+```
+
+## Convert Reconciliation
+Converts Notung reconciliation into RecPhyloXML format for visualization
+
+```
+python2.7 ~/tools/recPhyloXML/python/NOTUNGtoRecPhyloXML.py -g ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.ntg --include.species
+```
+
+## Visualize Reconciliation
+Generate a visual representation of the gene-within-species reconciliation tree
+
+```
+thirdkind -Iie -D 40 -f ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.ntg.xml -o ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.svg
+```
+
+## SVG to PDF conversion
+Format to PDF for easier viewing
+
+```
+convert -density 150 ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.svg ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.pdf
+```
+
+## Examine Reconciliation
+Displays summary table of duplication, loss, and speciation events inferred during reconciliation using this command
+
+```
+cat ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.events.txt
+```
+
+
 
 # 7. Results
 
@@ -328,6 +369,25 @@ The alignment results demonstrate a high degree of conservation in the EEF2K gen
 
 ## Lab 05
 
+### Phylogenetic Tree Estimation Parameters
+
+| **Parameter**                | **Value**                       |
+|-------------------------------|---------------------------------|
+| **Model of Substitution**     | JTT+G4                         |
+| **Model of Rate Heterogeneity** | Gamma with 4 categories         |
+| **Gamma Shape (α)**            | 0.6404                          |
+
+| **Category** | **Relative Rate** | **Proportion** |
+|--------------|-------------------|----------------|
+| 1            | 0.0615            | 0.2500         |
+| 2            | 0.3340            | 0.2500         |
+| 3            | 0.9006            | 0.2500         |
+| 4            | 2.7039            | 0.2500         |
+
+*Relative rates are computed as the mean of the portion of the Gamma distribution falling in each category.*
+
+### Analysis of Bootstrap values
+Generally high bootstrap values (lowest being 72) which shows strong general conservation across EEF2K homologs. Mammals form distinct clade with high bootstrap value, consistent with evolutionary relationship. Reptiles and amphibiand more distantly related to mammals, as evidence by branching pattern. Relatively short branch lengths within clades imply slower rate of divergence, supporting functional conservation. Some lower bootstrap values (e.g., 72 between Gasterosteus aculeatus and Salmo salar) highlight regions of uncertainty, potentially reflecting rapid evolutionary events or incomplete lineage sorting.
 
 ### PDF of Rscript command can be found within its respective folder (Lab 05) in final repository
 
