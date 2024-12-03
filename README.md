@@ -112,7 +112,7 @@ grep -o -E "^[A-Z]\.[a-z]+" EEF2K.blastp.detail.filtered.out | sort | uniq -c
 ### See [Results](#7-Results) for further information on expected output of these commands
 
 # 3. Multiple Sequence Alignment 
-This repository focuses on performing multiple sequence alignment (MSA) for the EEF2K gene family, a continuation from Lab 3's homolog identification. The aim is to align sequences with tools such as MUSCLE, AlignBuddy, and T-Coffee, assess sequence conservation, and calculate alignment statistics. Key analyses include identifying conserved regions, calculating average percent identity, and visualizing alignments to ensure their biological validity. This lab also involves identifying citations to understand EEF2K’s gene family evolution and its regulatory role in protein synthesis.
+This repository focuses on performing multiple sequence alignment (MSA) for the EEF2K gene family, a continuation from Lab 3's homolog identification. The aim is to align sequences with tools such as MUSCLE, AlignBuddy, and T-Coffee, assess sequence conservation, and calculate alignment statistics. Key analyses include identifying conserved regions, calculating average percent identity, and visualizing alignments to ensure their biological validity.
 
 ## Set Up Environment
 
