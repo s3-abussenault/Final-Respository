@@ -7,7 +7,7 @@
   3. [Multiple Sequence Alignment](#2-Multiple-Sequence-Alignment)
   4. [IQ-Tree](#4-IQ-Tree) 
   5. [Reconciliation](#5-Reconciliation)
-  6. [Protein Domain](#6-Protein-Domain)
+  6. [Protein Domain Prediction](#6-Protein-Domain-Prediction)
   7. [Results](#7-Results)
   8. [Conclusion](#8-Conclusion)
 
@@ -262,7 +262,9 @@ PDF name should be ```EEF2K.homologsf.al.midCl.treefile.pdf```
 ### See [Results](#7-Results) for further information on expected output of these commands
 
 # 5. Reconciliation
+
 The goal of this lab was to reconcile the evolutionary history of the EEF2K gene family by comparing its gene tree to the species tree of the studied organisms. This process involved identifying gene duplication, loss, and speciation events, which provide insight into the evolutionary dynamics of the EEF2K gene family. 
+
 ## Set Up Environment
 
 Make sure you create a folder for the EEF2K family for this lab
@@ -292,6 +294,7 @@ Use NOTUNG to identify duplication, losses, and speciation events through this c
 java -jar ~/tools/Notung-3.0_24-beta/Notung-3.0_24-beta.jar -s ~/lab06-$MYGIT/EEF2K/species.tre -g ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile --reconcile --speciestag prefix --savepng --events --outputdir ~/lab06-$MYGIT/EEF2K/
 ```
 
+
 ## Convert Reconciliation
 Converts Notung reconciliation into RecPhyloXML format for visualization
 
@@ -312,6 +315,7 @@ Format to PDF for easier viewing
 ```
 convert -density 150 ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.svg ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.pdf
 ```
+see both png and pdf versions ```EEF2K.homologsf.al.mid.treefile.rec..png``` and ```EEF2K.homologsf.al.mid.treefile.rec.pdf```
 
 ## Examine Reconciliation
 Displays summary table of duplication, loss, and speciation events inferred during reconciliation using this command
@@ -319,7 +323,60 @@ Displays summary table of duplication, loss, and speciation events inferred duri
 ```
 cat ~/lab06-$MYGIT/EEF2K/EEF2K.homologsf.al.mid.treefile.rec.events.txt
 ```
+should find a text file ```EEF2K.homologsf.al.mid.treefile.rec.events.txt```
 
+### See [Results](#7-Results) for further information on expected output of these commands
+
+# 6. Protein Domain Prediction
+
+This lab focuses on identifying protein domains in the EEF2K gene family using RPS-BLAST with the Pfam database to predict functional domains. The raw protein sequences are processed to remove stop codons and then analyzed to identify conserved and lineage-specific domains. The predicted domains are plotted alongside a phylogenetic tree generated in previous labs to visualize their distribution across species. This analysis provides insights into the functional conservation and potential evolutionary adaptations of the EEF2K gene family. The lab also involves comparing domain annotations across species and assessing their significance by adjusting e-values. These results, combined with previous phylogenetic findings, contribute to the results section of the final research paper, offering a deeper understanding of the evolutionary dynamics and functional roles of EEF2K across lineages.
+
+## Set Up Environment
+
+Make sure you create a folder for the EEF2K family for this lab
+
+```
+mkdir ~/lab05-$MYGIT/EEF2K
+```
+
+Now, go into the directory
+
+```
+cd ~/lab05-$MYGIT/EEF2K
+```
+
+Use the ```pwd``` command if you are unsure whether you are in the right working directory
+
+## Input Protein Sequences
+Make a copy of raw unaligned sequence from lab04 to remove any stop codons (asterisks) from raw sequences and save clean file with this command
+
+```
+sed 's/*//' ~/lab04-$MYGIT/EEF2K/EEF2K.homologs.fas > ~/lab08-$MYGIT/EEF2K/EEF2K.homologs.fas
+```
+
+## Run RPS-BLAST
+With clean sequence, predict Pfam domains using RPS-BLAST with stringent e-value threshold for accuracy 
+
+```
+rpsblast -query ~/lab08-$MYGIT/EEF2K/EEF2K.homologs.fas -db ~/data/Pfam/Pfam -out ~/lab08-$MYGIT/EEF2K/EEF2K.rps-blast.out -outfmt "6 qseqid qlen qstart qend evalue stitle" -evalue .0000000001
+```
+
+## Copy Phylogenetic Tree File and Plot Pfam Domains
+
+copy the phylogenetic tree file from lab05 to current directory
+
+```
+cp ~/lab05-$MYGIT/EEF2K/EEF2K.homologsf.outgroupbeta.treefile ~/lab08-$MYGIT/EEF2K/
+```
+
+Use Rscript to generate a PDF that visualizes Pfam domains alongside the phylogenetic tree for EEF2K
+
+```
+Rscript --vanilla ~/lab08-$MYGIT/plotTreeAndDomains.r ~/lab08-$MYGIT/EEF2K/EEF2K.homologsf.outgroupbeta.treefile ~/lab08-$MYGIT/EEF2K/EEF2K.rps-blast.out ~/lab08-$MYGIT/EEF2K/EEF2K.tree.rps.pdf
+```
+The file created here is ```EEF2K.tree.rps.pdf```
+
+### See [Results](#7-Results) for further information on expected output of these commands
 
 
 # 7. Results
@@ -391,9 +448,21 @@ Generally high bootstrap values (lowest being 72) which shows strong general con
 
 ### PDF of Rscript command can be found within its respective folder (Lab 05) in final repository
 
+## Lab 06
 
+| **Parameter**                                    | **Value**                                  |
+|-------------------------------------------------|--------------------------------------------|
+| **Cost of Reconciled Tree**                     | 12.0                                      |
+| **Copies in Common Ancestor of Gnathostomes**   | 1                                         |
+| **Events Leading to Common Ancestor of Tetrapods** | 1 speciation, 1 gene loss                 |
+| **Total Duplications**                          | 4                                         |
+| **Total Losses**                                | 6                                         |
 
+Four gene duplication events are suggestive of functional diversification in the EEF2K gene family. Six gene losses suggest that EEF2K may not be essential in all lineages or has been replaced by alternative mechanisms. However, the single copy in Gnathostomata is suggestive that EEF2K originated in a common ancestor and was conserved. 
 
+### PDF of Rscript command can be found within its respective folder (Lab 06) in final repository
+
+## Lab 08
 
 
 
