@@ -444,7 +444,7 @@ The alignment results demonstrate a high degree of conservation in the EEF2K gen
 *Relative rates are computed as the mean of the portion of the Gamma distribution falling in each category.*
 
 ### Analysis of Bootstrap values
-Generally high bootstrap values (lowest being 72) which shows strong general conservation across EEF2K homologs. Mammals form distinct clade with high bootstrap value, consistent with evolutionary relationship. Reptiles and amphibiand more distantly related to mammals, as evidence by branching pattern. Relatively short branch lengths within clades imply slower rate of divergence, supporting functional conservation. Some lower bootstrap values (e.g., 72 between Gasterosteus aculeatus and Salmo salar) highlight regions of uncertainty, potentially reflecting rapid evolutionary events or incomplete lineage sorting.
+Generally high bootstrap values (lowest being 72) which shows strong general conservation across EEF2K homologs. Mammals form distinct clade with high bootstrap value, consistent with evolutionary relationship. Reptiles and amphibians more distantly related to mammals, as evidence by branching pattern. Relatively short branch lengths within clades imply slower rate of divergence, supporting functional conservation. Some lower bootstrap values (e.g., 72 between Gasterosteus aculeatus and Salmo salar) highlight regions of uncertainty, potentially reflecting rapid evolutionary events or incomplete lineage sorting.
 
 ### PDF of Rscript command can be found within its respective folder (Lab 05) in final repository
 
