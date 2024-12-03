@@ -464,10 +464,22 @@ Four gene duplication events are suggestive of functional diversification in the
 
 ## Lab 08
 
+| **Parameter**                                      | **Value**                                                                                     |
+|----------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| **Gene with Most Pfam Domains**                   | *H.sapiens_EEF2K_eukaryotic_elongation_factor_2_kinase* (14 domains)                          |
+| **Pfam Domains Found in Most Genes**              | *pfam02816 (Alpha_kinase, Alpha-kinase family)*                                               |
+| **Pfam Domains Found Multiple Times in a Gene**   | *H.sapiens_EEF2K_eukaryotic_elongation_factor_2_kinase*: *pfam02816*                          |
+| **Gene with Longest Pfam Domain Annotation**      | *S.townsendi_EEF2K_LOW_QUALITY_PROTEIN_eukaryotic_elongation_factor* (183 residues)           |
+| **Domain with Best E-value**                      | *D.rerio_eef2k_eukaryotic_elongation_factor_2_kinase* (*pfam02816*, E-value: 2.52e-74)        |
+| **Domains Present Across All Lineages**           | *pfam02816 (Alpha_kinase)*                                                                    |
+| **Lineage-Specific Domain**                       | *pfam01270 (Glyco_hydro_8)* found in *X.laevis*, indicating potential functional adaptation.   |
+| **Evidence of Functional Divergence**             | Some gene copies lack *pfam01270*, suggesting divergence in functional roles across lineages. |
+| **Evidence of Functional Gain**                   | Acquisition of *pfam01270* in *X.laevis* indicates possible lineage-specific functional gain.  |
+
+The Alpha_kinase (pfam02816) domain is highly conserved and ubiquitous across the analyzed gene copies, reaffirming its critical role in EEF2K functionality. Lineage-specific differences, such as the presence of Glyco_hydro_8 (pfam01270) in X.laevis, highlight potential adaptations that may be explored further in functional and evolutionary contexts.
 
 
-
-
+### PDF of Rscript command can be found within its respective folder (Lab 08) in final repository
 
 
 
