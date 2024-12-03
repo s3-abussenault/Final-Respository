@@ -481,10 +481,8 @@ The Alpha_kinase (pfam02816) domain is highly conserved and ubiquitous across th
 
 ### PDF of Rscript command can be found within its respective folder (Lab 08) in final repository
 
+# 8. Conclusion 
 
-
-
-
-
+The work conducted from Lab 3 to Lab 8 provides a detailed evolutionary and functional analysis of the EEF2K gene family. Lab 3 focused on aligning homologous sequences, identifying conserved and variable regions. Lab 4 involved constructing a maximum-likelihood phylogenetic tree, revealing relationships between homologs. Lab 5 refined the phylogeny through rooting and bootstrap analysis, establishing divergence patterns. Lab 6 reconciled the gene and species trees, identifying key duplication and loss events, shedding light on lineage-specific adaptations. Finally, Lab 8 integrated domain predictions with the phylogeny, confirming conserved Alpha_kinase domains across species and highlighting lineage-specific gains, such as the Glyco_hydro_8 domain in X. laevis. Together, these analyses reveal how evolutionary pressures shaped the EEF2K gene family, providing insights into its conserved roles and lineage-specific adaptations.
 
 
