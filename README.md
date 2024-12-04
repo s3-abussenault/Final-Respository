@@ -270,13 +270,13 @@ The goal of this lab was to reconcile the evolutionary history of the EEF2K gene
 Make sure you create a folder for the EEF2K family for this lab
 
 ```
-mkdir ~/lab05-$MYGIT/EEF2K
+mkdir ~/lab06-$MYGIT/EEF2K
 ```
 
 Now, go into the directory
 
 ```
-cd ~/lab05-$MYGIT/EEF2K
+cd ~/lab06-$MYGIT/EEF2K
 ```
 
 Use the ```pwd``` command if you are unsure whether you are in the right working directory
@@ -336,13 +336,13 @@ This lab focuses on identifying protein domains in the EEF2K gene family using R
 Make sure you create a folder for the EEF2K family for this lab
 
 ```
-mkdir ~/lab05-$MYGIT/EEF2K
+mkdir ~/lab08-$MYGIT/EEF2K
 ```
 
 Now, go into the directory
 
 ```
-cd ~/lab05-$MYGIT/EEF2K
+cd ~/lab08-$MYGIT/EEF2K
 ```
 
 Use the ```pwd``` command if you are unsure whether you are in the right working directory
